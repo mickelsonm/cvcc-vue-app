@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>CVCC Quote Registry</title>
+
+
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+	<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap-theme.min.css'>
+	<link rel="stylesheet" href="src/css/style.css">
+</head>
+
+<body>
+	<div class="container">
+		<header class="page-header">
+			<div class="branding">
+				<img src="https://i.kym-cdn.com/entries/icons/mobile/000/000/091/TrollFace.jpg" alt="Logo" title="Home page" class="logo" />
+				<h1>CVCC Quote Registry</h1>
+			</div>
+		</header>
+		<main id="app"></main>
+	</div>
+
+	<template id="quote-list">
+		<section>
+			<div class="actions">
+				<router-link class="btn btn-default" :to="{path: '/add-quote'}">
+					<span class="glyphicon glyphicon-plus"></span>
+					Add Quote
+				</router-link>
+			</div>
+			<div class="filters row">
+				<div class="form-group col-sm-3">
+					<label for="search-element">Author</label>
+					<input v-model="searchKey" class="form-control" id="search-element" requred />
+				</div>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Author</th>
+						<th>Quote</th>
+						<th>Created</th>
+						<th class="col-sm-2">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="quote in filteredQuotes">
+						<td>
+							<router-link :to="{name: 'quote', params: {quote_id: quote.id}}">{{ quote.author }}</router-link>
+						</td>
+						<td>{{ quote.quote }}</td>
+            <td>{{ quote.created | formatUnix }}</td>
+						<td>
+							<router-link class="btn btn-warning btn-xs" :to="{name: 'quote-edit', params: {quote_id: quote.id}}">Edit</router-link>
+							<router-link class="btn btn-danger btn-xs" :to="{name: 'quote-delete', params: {quote_id: quote.id}}">Delete</router-link>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</template>
+
+	<template id="add-quote">
+		<section>
+			<h2>Add New Quote</h2>
+			<form v-on:submit="createQuote">
+				<div class="form-group">
+					<label for="add-author">Author</label>
+					<input class="form-control" id="add-author" v-model="quote.author" required />
+				</div>
+				<div class="form-group">
+					<label for="add-quote">Quote</label>
+					<textarea class="form-control" id="add-quote" rows="10" v-model="quote.quote"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Create</button>
+				<router-link to="/" class="btn btn-default">Cancel</router-link>
+			</form>
+		</section>
+	</template>
+
+	<template id="quote">
+		<section>
+			<h2>{{ quote.author }}</h2>
+			<b>Quote: </b>
+			<div>{{ quote.quote }}</div>
+			<b>Created:</b>
+			<div>{{ quote.created }}</div>
+			<br />
+			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+			<router-link to="/">Back to quote list</router-link>
+		</section>
+	</template>
+
+	<template id="quote-edit">
+		<section class="container-fluid">
+      <h2>Edit Quote</h2>
+			<form v-on:submit="updateQuote">
+				<div class="form-group">
+					<label for="edit-author">Author</label>
+					<input class="form-control" id="edit-author" v-model="quote.author" required />
+				</div>
+				<div class="form-group">
+					<label for="edit-description">Quote</label>
+					<textarea class="form-control" id="edit-quote" rows="3" v-model="quote.quote"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Save</button>
+				<router-link to="/" class="btn btn-default">Cancel</router-link>
+			</form>
+		</section>
+	</template>
+
+	<template id="quote-delete">
+		<section>
+			<h2>Delete Quote from {{ quote.author }}</h2>
+			<form v-on:submit="deleteQuote">
+				<p>The action cannot be undone.</p>
+				<button type="submit" class="btn btn-danger">Delete</button>
+				<router-link to="/" class="btn btn-default">Cancel</router-link>
+			</form>
+		</section>
+	</template>
+
+
+	<script src='node_modules/vue/dist/vue.min.js'></script>
+	<script src='node_modules/vue-router/dist/vue-router.min.js'></script>
+  <script src="node_modules/vue-resource/dist/vue-resource.min.js"></script>
+  <script src="node_modules/vue-moment/dist/vue-moment.js"></script>
+	<script src="src/js/index.js"></script>
+
+</body>
+
+</html>
