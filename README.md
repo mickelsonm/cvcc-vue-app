@@ -1,12 +1,39 @@
-## Vue.js v2 CRUD sample application
+## CVCC Vue Ap
 
-Uses vue.js v2.0 and vue-router v2.0
+Vue.js application the makes API calls against our go service.
 
- - Forked from [this demo](http://codepen.io/-a/pen/amOYGp) using vue.js 1.x
- - [Demo on codepen](http://codepen.io/shershen08/pen/xROOxw)
+#### Running Locally
 
-### Usage
- - clone or download zip of this repo
- - `cd` to the upacked folder
- - run `npm install`
- - run http server of your choice (eg [whs](https://github.com/gstack/watch-http-server) or [SimpleHTTPServer](https://docs.python.org/2/library/simplehttpserver.html))
+Fetch dependencies
+
+```
+> npm i
+```
+
+Run the server
+
+```
+> go run main.go
+```
+
+View in all it's glory
+
+```
+> open http://localhost:3030
+```
+
+
+#### Deploying to Kubernetes
+
+Build the Docker image
+
+```
+> docker built -t cvcc-vue-app .
+```
+
+Start the Kubernetes Deployment and Service
+
+```
+> kubectl create -f app.deployment.json
+> kubectl create -f app.service.json
+```
