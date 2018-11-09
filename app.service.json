@@ -1,0 +1,20 @@
+{
+	"apiVersion": "v1",
+	"kind": "Service",
+	"metadata": {
+		"name": "cvcc-vue-app",
+		"labels": {
+			"app": "cvcc-vue-app"
+		}
+	},
+	"spec": {
+		"type": "NodePort",
+		"ports": [{
+            "port": 3030,
+            "targetPort": 3030
+		}],
+		"selector": {
+			"app": ""
+		}
+	}
+}

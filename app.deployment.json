@@ -1,0 +1,39 @@
+{
+    "apiVersion": "extensions/v1beta1",
+    "kind": "Deployment",
+    "metadata": {
+        "name": "cvcc-vue-app"
+    },
+    "spec": {
+        "replicas": 1,
+        "template": {
+            "metadata": {
+                "labels": {
+                    "app": "cvcc-vue-app"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "cvcc-vue-app",
+                        "image": "cvcc-vue-app",
+                        "imagePullPolicy": "Never",
+                        "resources": {
+                            "requests": {
+                                "cpu": 0.05
+                            },
+                            "limits": {
+                                "cpu": 0.05
+                            }
+                        },
+                        "ports": [
+                            {
+                                "containerPort": 3030
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
